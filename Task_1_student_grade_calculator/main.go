@@ -4,10 +4,28 @@ import (
 	"fmt"
 )
 
+type Student struct {
+	name     string
+	subjects []string
+	grades   []float64
+}
+
+func (student *Student) CalculateAverage() float64 {
+	total := 0.0
+
+	for _, grade := range student.grades {
+		total += grade
+	}
+
+	return total / float64(len(student.grades))
+
+}
+
 func main() {
-	name := ""
+	student := &Student{}
+
 	fmt.Print("Enter your name: ")
-	fmt.Scan(&name)
+	fmt.Scan(&student.name)
 
 	numSubjects := 0
 	fmt.Print("Hom many subjects you took: ")
@@ -19,32 +37,29 @@ func main() {
 		fmt.Scan(&numSubjects)
 	}
 
-	subjects := make([]string, numSubjects)
-	grades := make([]float64, numSubjects)
-	total := 0.0
+	student.subjects = make([]string, numSubjects)
+	student.grades = make([]float64, numSubjects)
 
 	for i := 0; i < numSubjects; i++ {
 		fmt.Printf("Name of Subject %d: ", i+1)
-		fmt.Scan(&subjects[i])
+		fmt.Scan(&student.subjects[i])
 
-		fmt.Printf("Enter %s's grade: ", subjects[i])
-		fmt.Scan(&grades[i])
+		fmt.Printf("Enter %s's grade: ", student.subjects[i])
+		fmt.Scan(&student.grades[i])
 
-		for grades[i] < 0 || grades[i] > 100 {
+		for student.grades[i] < 0 || student.grades[i] > 100 {
 			fmt.Println("You entered invalid grade.")
-			fmt.Printf("Enter %s's grade: ", subjects[i])
-			fmt.Scan(&grades[i])
+			fmt.Printf("Enter %s's grade: ", student.subjects[i])
+			fmt.Scan(&student.grades[i])
 		}
-
-		total += grades[i]
 	}
 
-	fmt.Printf("\nStudent Name: %s\n", name)
+	fmt.Printf("\nStudent Name: %s\n", student.name)
 	fmt.Println("Subject Grades:")
 	for i := 0; i < numSubjects; i++ {
-		fmt.Printf("%s: %.2f\n", subjects[i], grades[i])
+		fmt.Printf("%s: %.1f\n", student.subjects[i], student.grades[i])
 	}
 
-	fmt.Printf("Average: %.2f", total/float64(numSubjects))
+	fmt.Printf("Average: %.1f", student.CalculateAverage())
 
 }
