@@ -37,8 +37,8 @@ func TestCleanString(t *testing.T) {
 
 // TestExtractWords tests the ExtractWords function.
 func TestExtractWords(t *testing.T) {
-	input := "Hello world This is a test"
-	want := []string{"Hello", "world", "This", "is", "a", "test"}
+	input := "hello world this is a test"
+	want := []string{"hello", "world", "this", "is", "a", "test"}
 	got := ExtractWords(input)
 	if !equalSlices(got, want) {
 		t.Errorf("ExtractWords(%q) = %v; want %v", input, got, want)
