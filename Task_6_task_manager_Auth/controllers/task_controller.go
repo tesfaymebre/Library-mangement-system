@@ -38,7 +38,12 @@ func CreateTask(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, data.CreateTask(newTask))
+	createdTask, err := data.CreateTask(newTask)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "failed to create task"})
+		return
+	}
+	c.IndentedJSON(http.StatusCreated, createdTask)
 }
 
 // updateTask updates a specific task.
@@ -63,7 +68,7 @@ func UpdateTask(c *gin.Context) {
 func DeleteTask(c *gin.Context) {
 	taskID := c.Param("id")
 	if err := data.DeleteTask(taskID); err == nil {
-		c.IndentedJSON(http.StatusNoContent, gin.H{"message": "task deleted"})
+		c.IndentedJSON(http.StatusOK, gin.H{"message": "task deleted"})
 		return
 	}
 
