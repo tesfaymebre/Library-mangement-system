@@ -1,1 +1,1 @@
-﻿# Library Management System
+﻿# Go development learning path
